@@ -1,8 +1,16 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import { AppDispatch } from "./../index";
 
-export const fetchAirports = async () => {
-  return (dispatch: Dispatch) => {
+import { airportAPI } from "../../api";
+import { airportSlice } from "../slices/airportSlice";
+
+export const fetchAirports = (page = 1, count = 50) => {
+  return async (dispatch: AppDispatch) => {
     try {
-    } catch (error) {}
+      dispatch(airportSlice.actions.fetching());
+      const response = await airportAPI.getAirports(page, count );
+      dispatch(airportSlice.actions.fetchSuccess(response.results));
+    } catch (error) {
+      dispatch(airportSlice.actions.fetchError(error as Error));
+    }
   };
 };

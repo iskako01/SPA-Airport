@@ -7,3 +7,10 @@ export interface IAirport {
   type: string;
   country: string;
 }
+
+export interface IServerResponse {
+  count: number;
+  next: number;
+  previous: null | number;
+  results: IAirport[];
+}

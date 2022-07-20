@@ -1,5 +1,10 @@
 import React from "react";
+import { IAirport } from "../types/airportType";
 
-export const AirportCard = () => {
-  return <div>AirportCard</div>;
+interface AirportCardProps {
+  airport: IAirport;
+}
+
+export const AirportCard: React.FC<AirportCardProps> = ({ airport }) => {
+  return <div>{airport.name}</div>;
 };

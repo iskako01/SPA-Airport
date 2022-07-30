@@ -11,4 +11,7 @@ export const airportAPI = {
       .get<IServerResponse>("/airports", { params: { page, count } })
       .then((response) => response.data);
   },
+  searchAirports(search: string, count: number) {
+    return instance.get("/airports", { params: { search, count } });
+  },
 };

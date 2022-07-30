@@ -5,12 +5,18 @@ interface AirportState {
   loading: boolean;
   error: string;
   airports: IAirport[];
+  count: number;
+}
+interface AirportPayload {
+  airports: IAirport[];
+  count: number;
 }
 
 const initialState: AirportState = {
   loading: false,
   error: "",
   airports: [],
+  count: 0,
 };
 
 export const airportSlice = createSlice({
@@ -21,9 +27,11 @@ export const airportSlice = createSlice({
       state.loading = true;
     },
 
-    fetchSuccess(state: AirportState, action: PayloadAction<IAirport[]>) {
+    fetchSuccess(state: AirportState, action: PayloadAction<AirportPayload>) {
       state.loading = false;
-      state.airports = action.payload;
+      state.airports = action.payload.airports;
+      state.count = action.payload.count;
+      state.error = "";
     },
 
     fetchError(state: AirportState, action: PayloadAction<Error>) {

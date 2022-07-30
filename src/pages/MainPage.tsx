@@ -7,30 +7,39 @@ import { fetchAirports } from "../store/actions/airportAction";
 import ReactPaginate from "react-paginate";
 import { IAirport } from "../types/airportType";
 
+const ITEMS_PER_PAGE = 50;
+
 export const MainPage = () => {
   const dispatch = useAppDispatch();
-  const { loading, error, airports } = useAppSelector((state) => state.airport);
-  const [currentItems, setCurrentItems] = useState<IAirport[]>([]);
-  const [pageCount, setPageCount] = useState<number>(0);
-  const [itemOffset, setItemOffset] = useState<number>(0);
+  const { loading, error, airports, count } = useAppSelector(
+    (state) => state.airport
+  );
+  const [page, setPage] = useState<number>(0);
+  //   const [currentItems, setCurrentItems] = useState<IAirport[]>([]);
+  //   const [pageCount, setPageCount] = useState<number>(0);
+  //   const [itemOffset, setItemOffset] = useState<number>(0);
+
+  const pageCount = Math.ceil(count / ITEMS_PER_PAGE);
 
   const itemsPerPage = 4;
 
-  const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % airports.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
+  const handlePageClick = ({ selected }: { selected: number }) => {
+    setPage(selected);
+    // const newOffset = (selected * itemsPerPage) % airports.length;
+    // console.log(
+    //   `User requested page number ${selected}, which is offset ${newOffset}`
+    // );
+    // setItemOffset(newOffset);
   };
 
   useEffect(() => {
-    dispatch(fetchAirports());
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(airports.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(airports.length / itemsPerPage));
-  }, [dispatch, itemOffset, itemsPerPage]);
+    dispatch(fetchAirports(page + 1, ITEMS_PER_PAGE));
+    // const endOffset = itemOffset + itemsPerPage;
+    // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    // setCurrentItems(airports.slice(itemOffset, endOffset));
+    // setPageCount(Math.ceil(airports.length / itemsPerPage));
+    // console.log("airports", airports);
+  }, [dispatch, page]);
   return (
     <div className="container mx-auto max-w-[760px] pt-5 ">
       <AirportSearch />
@@ -39,17 +48,23 @@ export const MainPage = () => {
       {loading && <p className="text-center text-lg">Loading...</p>}
       {error && <p className="text-center text-lg text-red-700">{error}</p>}
 
-      {currentItems.map((airport) => (
+      {airports.map((airport) => (
         <AirportCard airport={airport} key={airport.id} />
       ))}
 
       <ReactPaginate
         breakLabel="..."
-        nextLabel="next >"
+        nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel="<"
+        containerClassName="flex"
+        pageClassName="py-1 px-2 border ml-2 "
+        nextClassName="py-1 px-2 border mr-2 "
+        previousClassName="py-1 px-2 border"
+        activeClassName="bg-gray-500 text-white"
+        forcePage={page}
       />
     </div>
   );

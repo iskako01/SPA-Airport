@@ -5,7 +5,7 @@ import { AirportSearch } from "../components/AirportSearch";
 import { useAppDispatch, useAppSelector } from "../hook/redux";
 import { fetchAirports } from "../store/actions/airportAction";
 import ReactPaginate from "react-paginate";
-import { IAirport } from "../types/airportType";
+import { IAirport } from "../types/models";
 
 const ITEMS_PER_PAGE = 50;
 

@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Navigation } from "./components/Navigation";
+import { useAppDispatch } from "./hook/redux";
 import { AirportDetailPage } from "./pages/AirportDetailPage";
 import { AuthPage } from "./pages/AuthPage";
 import { MainPage } from "./pages/MainPage";
+import { fetchHandbook } from "./store/actions/handbookAction";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchHandbook());
+  }, [dispatch]);
   return (
     <>
       <Navigation />

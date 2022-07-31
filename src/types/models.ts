@@ -14,3 +14,9 @@ export interface IServerResponse {
   previous: null | number;
   results: IAirport[];
 }
+
+export interface IFilter {
+  type: string;
+  region: string;
+  country: string;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IAirport } from "../types/airportType";
+import { IAirport } from "../types/models";
 
 interface AirportCardProps {
   airport: IAirport;

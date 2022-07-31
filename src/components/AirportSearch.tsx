@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { airportAPI } from "../api";
 import { useDebounce } from "../hook/debounce";
 import { useInput } from "../hook/input";
-import { IAirport } from "../types/airportType";
+import { IAirport } from "../types/models";
 
 export const AirportSearch = () => {
   const input = useInput("");

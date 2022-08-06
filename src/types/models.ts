@@ -15,8 +15,28 @@ export interface IServerResponse {
   results: IAirport[];
 }
 
+export interface IAuthServerResponse {
+  access: string;
+  refresh: string;
+}
+
 export interface IFilter {
   type: string;
   region: string;
   country: string;
+}
+
+export interface IAirportDetails {
+  continent: string;
+  coordinates: string;
+  country: string;
+  elevation_ft: string;
+  gps_code: string | null;
+  iata_code: string | null;
+  ident: string;
+  local_code: string | null;
+  municipality: string;
+  name: string;
+  region: string;
+  type: string;
 }

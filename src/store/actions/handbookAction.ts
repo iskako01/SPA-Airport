@@ -18,7 +18,6 @@ export const fetchHandbook = () => {
           countries: data[2].data,
         })
       );
-      console.log(data);
     } catch (error) {
       //   dispatch(airportSlice.actions.fetchError(error as Error));
     }
